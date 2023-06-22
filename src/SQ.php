@@ -4,7 +4,7 @@
  * @@link http://saidqb.github.io
  * 
  */
-namespace Saidqb\Filacms;
+namespace Saidqb\Lib;
 
 class SQ
 {
