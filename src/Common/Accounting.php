@@ -24,6 +24,8 @@ trait Accounting
 		type
 	-
 	*/
+
+	
 	static function generateDiscount($price,$discount,$type='nominal'){
 		$arr = [];
 
