@@ -1,0 +1,24 @@
+{
+    "name": "saidqb/lib",
+    "description": "just script",
+    "type": "library",
+    "license": "MIT",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Saidqb\\Lib\\": "src/"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0"
+    },
+    "authors": [
+        {
+            "name": "saidqb",
+            "email": "saidqb@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+
+}
