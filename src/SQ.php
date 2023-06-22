@@ -6,7 +6,7 @@
  */
 namespace Saidqb\Filacms;
 
-class Lib
+class SQ
 {
     use 
     Common\Accounting,
