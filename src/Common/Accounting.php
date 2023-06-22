@@ -4,7 +4,7 @@
  * @@link http://saidqb.github.io
  * 
  */
-namespace Saidqb\Filacms\Common;
+namespace Saidqb\Lib\Common;
 
 
 trait Accounting
@@ -25,7 +25,7 @@ trait Accounting
 	-
 	*/
 
-	
+
 	static function generateDiscount($price,$discount,$type='nominal'){
 		$arr = [];
 

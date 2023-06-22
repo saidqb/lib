@@ -4,7 +4,7 @@
  * @@link http://saidqb.github.io
  * 
  */
-namespace Saidqb\Filacms\Common;
+namespace Saidqb\Lib\Common;
 
 
 trait Notification

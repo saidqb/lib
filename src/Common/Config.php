@@ -13,7 +13,7 @@ $table->unsignedTinyInteger('config_autoload')->default('0');
 $table->index('config_id','config_id');
 $table->index('config_name','config_name');
 */
-namespace Saidqb\Filacms\Common;
+namespace Saidqb\Lib\Common;
 
 trait Config
 {
