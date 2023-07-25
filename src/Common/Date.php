@@ -121,7 +121,7 @@ trait Date
 
 
 
-	function indoDay($datetime, $format = 'indo'){
+	static function indoDay($datetime, $format = 'indo'){
 		$day = date ("D",strtotime($datetime));
 
 		switch($day){
@@ -161,7 +161,7 @@ trait Date
 		return $dayname;
 	}
 
-	function indoDateObj($datetime){
+	static function indoDateObj($datetime){
 		$obj = [];
 		$obj['month'] = self::convertMonth(date('m',strtotime($datetime)));
 		$obj['date_text'] = self::indoDate($datetime, false);

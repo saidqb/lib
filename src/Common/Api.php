@@ -156,7 +156,7 @@ trait Api
 	 * @param  string $message_code [kode ke dua pada response kode yang sama]
 	 * @return [type]               [description]
 	 */
-	function response($code,$data='',$message='',$message_code = ''){
+	static function response($code,$data='',$message='',$message_code = ''){
 		if(is_object($data)){
 			$data = (array)$data;
 		}
@@ -236,7 +236,7 @@ trait Api
 	}
 
 
-	function dataNormalize($data){
+	static function dataNormalize($data){
 		if(is_object($data)){
 			$data = (array)$data;
 		}

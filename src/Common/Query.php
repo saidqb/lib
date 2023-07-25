@@ -298,7 +298,7 @@ trait Query
         return $content;
     }
 
-    function filterQueryArray()
+    static function filterQueryArray()
     {
 
         $req = request()->all();

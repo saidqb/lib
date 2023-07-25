@@ -8,18 +8,19 @@ namespace Saidqb\Lib;
 
 class SQ
 {
-    use 
-    Common\Accounting,
-    Common\Api,
-    Common\Config,
-    Common\Date,
-    Common\Generate,
-    Common\Manipulation,
-    Common\Number,
-    Common\Query,
-    Common\Url,
-    Common\Server,
-    Common\Firebase;
+    
+    use Common\Accounting;
+    use Common\Api;
+    use Common\Config;
+    use Common\Date;
+    use Common\Firebase;
+    use Common\Generate;
+    use Common\Manipulation;
+    use Common\Notification;
+    use Common\Number;
+    use Common\Query;
+    use Common\Server;
+    use Common\Url;
 
     static function version(){
         return '1.0.0';
