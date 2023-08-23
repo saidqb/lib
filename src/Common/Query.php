@@ -4,10 +4,13 @@
  * @@link http://saidqb.github.io
  * 
  */
-namespace Saidqb\Lib\Common;
+namespace SQ\Common;
 
 trait Query
 {
+
+    static $defaultLimit = 999999999;
+
     static function DB(){
         $db = new \DB;
         return $db;
@@ -98,7 +101,9 @@ trait Query
                 $total_display = $limit;
             }
         }
-
+        if($limit == static::$defaultLimit){
+            $limit = $total;
+        }
         $pagination = array(
             'total_data' => $total,
             'total_page' => $total_page,
@@ -120,6 +125,9 @@ trait Query
 
         if($laravel === true){
 
+            if($res->perPage() == static::$defaultLimit){
+                $limit = $res->total();
+            }
 
             $showPage = 5;
             $pagination['count'] = $res->count();
@@ -227,6 +235,15 @@ trait Query
                 }
             }
         }
+
+        if(!is_numeric($req['limit'])){
+            $req['limit'] = $default['limit'];
+        }
+
+        if($req['limit'] == -1){
+            $req['limit'] = static::$defaultLimit;
+        }
+
 
         $columns = [];
         foreach ($conf['select'] as $key => $v) {
@@ -571,7 +588,7 @@ trait Query
         
         $invoiceExist = true;
         while ($invoiceExist) {
-            
+
             $inv_data_count = sprintf("%0".$landing_zero_count."d", $count_data_invoice);
 
             $makeInvoice = $custom_landig_prefix . $date_text.$inv_data_count;
