@@ -49,7 +49,7 @@ trait Url
 	}
 
 	static function segmentUrlPrevious($segment = 0){
-		return SQ::segmentUrl($segment,url()->previous());
+		return static::segmentUrl($segment,url()->previous());
 	}
 }
 
