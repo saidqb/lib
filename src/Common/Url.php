@@ -47,5 +47,9 @@ trait Url
 		}
 		return '';
 	}
+
+	static function segmentUrlPrevious($segment = 0){
+		return SQ::segmentUrl($segment,url()->previous());
+	}
 }
 
