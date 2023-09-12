@@ -4,7 +4,7 @@
  * @@link http://saidqb.github.io
  * 
  */
-namespace SQ\Common;
+namespace Saidqb\Lib\Common;
 
 trait Query
 {
