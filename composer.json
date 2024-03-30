@@ -3,7 +3,9 @@
     "description": "just script",
     "type": "library",
     "license": "MIT",
-    "require": {},
+    "require": {
+        "firebase/php-jwt": "^5.5"
+    },
     "autoload": {
         "psr-4": {
             "Saidqb\\Lib\\": "src/"
