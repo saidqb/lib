@@ -4,7 +4,7 @@
  * @@link http://saidqb.github.io
  * 
  */
-namespace Saidqb\Lib\Common;
+namespace SQ\Common;
 
 trait Query
 {
@@ -580,11 +580,24 @@ trait Query
     static function generateInvoiceCode($table,$table_field_invoice, $table_field_id, $table_field_date, $custom_landig_prefix='',$landing_zero_count=''){
         $date_formated = date('Y-m-d');
         $date_text = date('Ymd');
+        $prefixym = strlen($date_text);
+
         if(empty($landing_zero_count)){
             $landing_zero_count = 6;
         }
-        $count_data_invoice = \DB::table($table)->whereDate($table_field_date, '=', $date_formated)->count();
-        $count_data_invoice++;
+        // $count_data_invoice = \DB::table($table)->whereDate($table_field_date, '=', $date_formated)->count();
+        // $count_data_invoice++;
+
+        $data = \DB::table($table)->whereDate($table_field_date, '=', $date_formated)->orderBy($table_field_id, 'DESC')->first();
+        $count_data_invoice = 1;
+        if(!empty($data)){
+            $n = $data->{$table_field_invoice};
+            $n = preg_replace('/[^0-9]/', '', $n); 
+            $n = substr($n, $prefixym);
+            $count_data_invoice = (int)$n;
+            $count_data_invoice++;
+        }
+
         
         $invoiceExist = true;
         while ($invoiceExist) {

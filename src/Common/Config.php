@@ -1,8 +1,8 @@
-<?php 
+<?php
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 /*
 $table->unsignedBigInteger('config_id')->autoIncrement();
@@ -13,7 +13,7 @@ $table->unsignedTinyInteger('config_autoload')->default('0');
 $table->index('config_id','config_id');
 $table->index('config_name','config_name');
 */
-namespace Saidqb\Lib\Common;
+namespace SQ\Common;
 
 trait Config
 {
@@ -84,6 +84,10 @@ trait Config
 
 		$config = \DB::table('config')->where('config_name', '=', $name)->first();
 
+        if(empty($config)){
+            return NULL;
+        }
+
 		if(isset($config->config_value)){
 			if(isJson($config->config_value)){
 				$config->config_value = json_decode($config->config_value);
@@ -96,7 +100,7 @@ trait Config
 		$nc->value = $config->config_value;
 		$nc->autoload = $config->config_autoload;
 		return $nc;
-		
+
 	}
 
 	static function configDelete($name){
@@ -108,6 +112,6 @@ trait Config
 		}
 
 		return true;
-		
+
 	}
 }
