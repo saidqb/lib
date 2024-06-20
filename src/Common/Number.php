@@ -1,9 +1,11 @@
-<?php 
+<?php
+
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
  * 
  */
+
 namespace Saidqb\Lib\Common;
 
 
@@ -11,40 +13,43 @@ trait Number
 {
 
 
-    static function phoneNumber($numHp, $removeLandingZero = false){
+    static function phoneNumber($numHp, $removeLandingZero = false)
+    {
         preg_match_all('!\d+!', $numHp, $matches);
         $numOnly = implode('', $matches[0]);
-        $numOnly = str_replace(' ','',$numOnly);
+        $numOnly = str_replace(' ', '', $numOnly);
         $numOnly = (int)$numOnly;
 
-        $phpFirst2 = substr($numOnly,0, 2);
+        $phpFirst2 = substr($numOnly, 0, 2);
 
-        if($phpFirst2 == '62'){
+        if ($phpFirst2 == '62') {
             $numOnly = substr($numOnly, 2);
         }
-        if($removeLandingZero == true){
+        if ($removeLandingZero == true) {
             return (int)$numOnly;
         }
         return '0' . (int)$numOnly;
     }
 
-    static function numberFormat($number, $typeCurrency = '', $lastNumber = 0){
-        if(!empty($number)){
+    static function numberFormat($number, $typeCurrency = '', $lastNumber = 0)
+    {
+        if (!empty($number)) {
 
-            $isNUmber = number_format($number,$lastNumber,",",".");
+            $isNUmber = number_format($number, $lastNumber, ",", ".");
 
-            if(!empty($typeCurrency)){
-                return $typeCurrency . ' '. $isNUmber;
+            if (!empty($typeCurrency)) {
+                return $typeCurrency . ' ' . $isNUmber;
             }
             return $isNUmber;
         }
-        return $typeCurrency .' '. $number;
+        return $typeCurrency . ' ' . $number;
     }
 
 
-    static function getNumeric($str) {
+    static function getNumeric($str)
+    {
         preg_match_all('/\d+/', $str, $matches);
-        if(isset($matches[0][0])){
+        if (isset($matches[0][0])) {
             return $matches[0][0];
         }
         return '';
@@ -57,7 +62,8 @@ trait Number
         $result = '';
 
         // Create a lookup array that contains all of the Roman numerals.
-        $lookup = array('M' => 1000,
+        $lookup = array(
+            'M' => 1000,
             'CM' => 900,
             'D' => 500,
             'CD' => 400,
@@ -69,16 +75,17 @@ trait Number
             'IX' => 9,
             'V' => 5,
             'IV' => 4,
-            'I' => 1);
+            'I' => 1
+        );
 
         foreach ($lookup as $roman => $value) {
-        // Determine the number of matches
+            // Determine the number of matches
             $matches = intval($integer / $value);
 
-        // Add the same number of characters to the string
+            // Add the same number of characters to the string
             $result .= str_repeat($roman, $matches);
 
-        // Set the integer to be the remainder of the integer and the value
+            // Set the integer to be the remainder of the integer and the value
             $integer = $integer % $value;
         }
 
@@ -86,4 +93,3 @@ trait Number
         return $result;
     }
 }
-

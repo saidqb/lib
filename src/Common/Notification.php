@@ -1,23 +1,26 @@
-<?php 
+<?php
+
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
  * 
  */
+
 namespace Saidqb\Lib\Common;
 
 
 trait Notification
 {
-	static function fcmMultiSend($registration_ids = array(), $title = '' , $body = '', $data_extra = array()){
-        $firebase_key = env('SQ_FIREBASE_MESSAGE_KEY','');
+    static function fcmMultiSend($registration_ids = array(), $title = '', $body = '', $data_extra = array())
+    {
+        $firebase_key = env('SQ_FIREBASE_MESSAGE_KEY', '');
         $firebase_url = 'https://fcm.googleapis.com/fcm/send';
-        if (strlen($body) > 35){
+        if (strlen($body) > 35) {
             $body = substr($body, 0, 35);
             $body = explode(' ', $body);
             array_pop($body);  // remove last word from array
             $body = implode(' ', $body);
-            $body = $body.'.....';
+            $body = $body . '.....';
         }
 
         // $notification = array(
@@ -44,14 +47,14 @@ trait Notification
             "alert" => true
         );
 
-        
+
 
         $arrayToSend = array(
-            'registration_ids' => $registration_ids, 
+            'registration_ids' => $registration_ids,
             'notification' => $notification
         );
-        
-        if(!empty($data_extra)){
+
+        if (!empty($data_extra)) {
             $arrayToSend['data'] = $data_extra;
         }
 
@@ -66,7 +69,7 @@ trait Notification
         curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            //Send the request
+        //Send the request
         $response = curl_exec($ch);
     }
 }

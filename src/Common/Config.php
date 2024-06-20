@@ -1,4 +1,7 @@
 <?php
+
+namespace Saidqb\Lib\Common;
+
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
@@ -13,20 +16,21 @@ $table->unsignedTinyInteger('config_autoload')->default('0');
 $table->index('config_id','config_id');
 $table->index('config_name','config_name');
 */
-namespace SQ\Common;
+
 
 trait Config
 {
 
-	static function configAdd($name,$value,$is_autoload = 0){
+	static function configAdd($name, $value, $is_autoload = 0)
+	{
 		try {
 			$config = \DB::table('config')->where('config_name', '=', $name)->first();
 
-			if(!empty($config)){
+			if (!empty($config)) {
 				throw new \Exception("Config name sudah digunakan");
 			}
 
-			if(is_array($value)){
+			if (is_array($value)) {
 				$value = json_encode($value);
 			}
 
@@ -37,8 +41,6 @@ trait Config
 			];
 
 			$configId = \DB::table('config')->insertGetId($in);
-
-
 		} catch (\Throwable $e) {
 			return $e->getMessage();
 		}
@@ -46,16 +48,17 @@ trait Config
 		return true;
 	}
 
-	static function configUpdate($name,$value,$is_autoload = 0){
+	static function configUpdate($name, $value, $is_autoload = 0)
+	{
 
 		try {
 			$config = \DB::table('config')->where('config_name', '=', $name)->first();
 
-			if(is_array($value)){
+			if (is_array($value)) {
 				$value = json_encode($value);
 			}
 
-			if(empty($config)){
+			if (empty($config)) {
 
 				$in = [
 					'config_name' => $name,
@@ -70,9 +73,7 @@ trait Config
 					'config_autoload' => $is_autoload,
 				];
 				\DB::table('config')->where('config_name', $name)->update($up);
-
 			}
-
 		} catch (\Throwable $e) {
 			return $e->getMessage();
 		}
@@ -80,16 +81,17 @@ trait Config
 		return true;
 	}
 
-	static function configGet($name){
+	static function configGet($name)
+	{
 
 		$config = \DB::table('config')->where('config_name', '=', $name)->first();
 
-        if(empty($config)){
-            return NULL;
-        }
+		if (empty($config)) {
+			return NULL;
+		}
 
-		if(isset($config->config_value)){
-			if(isJson($config->config_value)){
+		if (isset($config->config_value)) {
+			if (isJson($config->config_value)) {
 				$config->config_value = json_decode($config->config_value);
 			}
 		}
@@ -100,10 +102,10 @@ trait Config
 		$nc->value = $config->config_value;
 		$nc->autoload = $config->config_autoload;
 		return $nc;
-
 	}
 
-	static function configDelete($name){
+	static function configDelete($name)
+	{
 
 		try {
 			DB::table('config')->where('config_name', '=', $name)->delete();
@@ -112,6 +114,5 @@ trait Config
 		}
 
 		return true;
-
 	}
 }
