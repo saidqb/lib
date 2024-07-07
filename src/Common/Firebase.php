@@ -3,7 +3,7 @@
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 
 namespace Saidqb\Lib\Common;

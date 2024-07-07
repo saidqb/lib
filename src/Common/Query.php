@@ -5,7 +5,7 @@ namespace Saidqb\Lib\Common;
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 
 

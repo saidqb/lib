@@ -3,7 +3,7 @@
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 namespace Saidqb\Lib;
 
@@ -15,6 +15,7 @@ class SQ
     use Common\Config;
     use Common\Currency;
     use Common\Date;
+    use Common\EncodeDecode;
     use Common\Firebase;
     use Common\Generate;
     use Common\Manipulation;

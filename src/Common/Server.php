@@ -3,7 +3,7 @@
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 
 namespace Saidqb\Lib\Common;
@@ -11,7 +11,6 @@ namespace Saidqb\Lib\Common;
 
 trait Server
 {
-
     static function getClientIp()
     {
         $ipaddress = '';
@@ -31,8 +30,6 @@ trait Server
             $ipaddress = 'UNKNOWN';
         return $ipaddress;
     }
-
-
 
     static function deleteDir($dirPath)
     {

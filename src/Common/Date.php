@@ -3,7 +3,7 @@
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 
 namespace Saidqb\Lib\Common;
@@ -96,7 +96,6 @@ trait Date
 		return $arr_month;
 	}
 
-
 	static function indoDate($tanggal, $time = true)
 	{
 		$bulan = array(
@@ -128,8 +127,6 @@ trait Date
 
 		return $newDate;
 	}
-
-
 
 	static function indoDay($datetime, $format = 'indo')
 	{

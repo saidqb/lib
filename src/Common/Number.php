@@ -3,7 +3,7 @@
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 
 namespace Saidqb\Lib\Common;
@@ -11,8 +11,6 @@ namespace Saidqb\Lib\Common;
 
 trait Number
 {
-
-
     static function phoneNumber($numHp, $removeLandingZero = false)
     {
         preg_match_all('!\d+!', $numHp, $matches);

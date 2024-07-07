@@ -3,7 +3,7 @@
 /**
  * @author saidqb
  * @@link http://saidqb.github.io
- * 
+ *
  */
 
 namespace Saidqb\Lib\Common;
@@ -26,8 +26,8 @@ trait Notification
         // $notification = array(
         //     "title" => $title,
         //     "body" => $body,
-        //     'icon' => 'https://toppng.com/uploads/preview/a-education-icon-education-icon-11553430161bimwyohogu.png', 
-        //     'sound' => 'default', 
+        //     'icon' => 'https://toppng.com/uploads/preview/a-education-icon-education-icon-11553430161bimwyohogu.png',
+        //     'sound' => 'default',
         //     'badge' => '1'
         // );
 
@@ -47,8 +47,6 @@ trait Notification
             "alert" => true
         );
 
-
-
         $arrayToSend = array(
             'registration_ids' => $registration_ids,
             'notification' => $notification
@@ -57,7 +55,6 @@ trait Notification
         if (!empty($data_extra)) {
             $arrayToSend['data'] = $data_extra;
         }
-
 
         $json = json_encode($arrayToSend);
         $headers = array();
