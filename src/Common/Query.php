@@ -7,6 +7,7 @@ namespace Saidqb\Lib\Common;
  * @@link http://saidqb.github.io
  *
  */
+
 use Saidqb\Lib\Support\Helper;
 
 
@@ -15,10 +16,14 @@ trait Query
 
     static $defaultLimit = 999999999;
 
-    static function DB()
+    static function DB($db = null)
     {
-        $db = new \DB;
-        return $db;
+        if (!empty($db)) {
+            $db = $db;
+        } else {
+            $db = new \DB;
+            return $db;
+        }
     }
 
     static function queryResult($query, $column = ['*'])
@@ -179,7 +184,7 @@ trait Query
     }
 
     /* get data db aftart DB:table()*/
-    static function &setQueryPaginate($query = '', $conf = [])
+    static function &setQueryPaginate($query = [], $conf = [])
     {
         static $dataQuery = [];
 
@@ -223,7 +228,7 @@ trait Query
         $default = [
             'limit' => 10,
             'order_by' => 'DESC',
-            'sort' => '',
+            'sort' => [],
             'search' => '',
         ];
 
@@ -429,11 +434,11 @@ trait Query
                                 $comparison = '=';
                             }
                             if ($comparison == 'bet') {
-                                if (Data::validate_date($value1) && Data::validate_date($value2)) {
+                                if (Date::validate_date($value1) && Date::validate_date($value2)) {
                                     $sql_search .= " AND " . $field . " BETWEEN '" . $value1 . "' AND '" . $value2 . "'";
                                 }
                             } else {
-                                if (Data::validate_date($value1)) {
+                                if (Date::validate_date($value1)) {
                                     $sql_search .= " AND " . $field . " " . $comparison . " '" . $value1 . "'";
                                 }
                             }
@@ -454,15 +459,15 @@ trait Query
                                 $comparison = '=';
                             }
                             if ($comparison == 'bet') {
-                                if (Data::validate_date($value1, 'Y-m-d H:i:s') && Data::validate_date($value2, 'Y-m-d H:i:s')) {
+                                if (Date::validate_date($value1, 'Y-m-d H:i:s') && Date::validate_date($value2, 'Y-m-d H:i:s')) {
                                     $sql_search .= " AND " . $field . " BETWEEN '" . $value1 . "' AND '" . $value2 . "'";
-                                } else if (Data::validate_date($value1) && Data::validate_date($value2)) {
+                                } else if (Date::validate_date($value1) && Date::validate_date($value2)) {
                                     $sql_search .= " AND DATE(" . $field . ") BETWEEN '" . $value1 . "' AND '" . $value2 . "'";
                                 }
                             } else {
-                                if (Data::validate_date($value1, 'Y-m-d H:i:s')) {
+                                if (Date::validate_date($value1, 'Y-m-d H:i:s')) {
                                     $sql_search .= " AND " . $field . " " . $comparison . " '" . $value1 . "'";
-                                } else if (Data::validate_date($value1)) {
+                                } else if (Date::validate_date($value1)) {
                                     $sql_search .= " AND DATE(" . $field . ") " . $comparison . " '" . $value1 . "'";
                                 }
                             }
@@ -553,7 +558,7 @@ trait Query
     /* MIGRATION */
     static function migrationSetSqlMode()
     {
-        \DB::statement('SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";');
+        static::DB()->statement('SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";');
     }
 
     static function migrationSetTable($table)
@@ -572,7 +577,7 @@ trait Query
         $slugExist = true;
         $slugnum = 0;
         while ($slugExist) {
-            $data = \DB::table($table)->where($table_field, '=', $makeSlug)->first();
+            $data = static::DB()->table($table)->where($table_field, '=', $makeSlug)->first();
             if (!empty($data)) {
                 $slugnum++;
                 $sl = explode('-', $makeSlug);
@@ -601,10 +606,10 @@ trait Query
         if (empty($landing_zero_count)) {
             $landing_zero_count = 6;
         }
-        // $count_data_invoice = \DB::table($table)->whereDate($table_field_date, '=', $date_formated)->count();
+        // $count_data_invoice = static::DB()->table($table)->whereDate($table_field_date, '=', $date_formated)->count();
         // $count_data_invoice++;
 
-        $data = \DB::table($table)->whereDate($table_field_date, '=', $date_formated)->orderBy($table_field_id, 'DESC')->first();
+        $data = static::DB()->table($table)->whereDate($table_field_date, '=', $date_formated)->orderBy($table_field_id, 'DESC')->first();
         $count_data_invoice = 1;
         if (!empty($data)) {
             $n = $data->{$table_field_invoice};
@@ -622,7 +627,7 @@ trait Query
 
             $makeInvoice = $custom_landig_prefix . $date_text . $inv_data_count;
 
-            $data = \DB::table($table)->where($table_field_invoice, '=', $makeInvoice)->orderBy($table_field_id, 'DESC')->first();
+            $data = static::DB()->table($table)->where($table_field_invoice, '=', $makeInvoice)->orderBy($table_field_id, 'DESC')->first();
 
             if (!empty($data)) {
                 $count_data_invoice++;

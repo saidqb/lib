@@ -24,7 +24,7 @@ trait Config
     static function configAdd($name, $value, $is_autoload = 0)
     {
         try {
-            $config = \DB::table('config')->where('config_name', '=', $name)->first();
+            $config = static::DB()->table('config')->where('config_name', '=', $name)->first();
 
             if (!empty($config)) {
                 throw new \Exception("Config name sudah digunakan");
@@ -40,7 +40,7 @@ trait Config
                 'config_autoload' => $is_autoload,
             ];
 
-            $configId = \DB::table('config')->insertGetId($in);
+            $configId = static::DB()->table('config')->insertGetId($in);
         } catch (\Throwable $e) {
             return $e->getMessage();
         }
@@ -52,7 +52,7 @@ trait Config
     {
 
         try {
-            $config = \DB::table('config')->where('config_name', '=', $name)->first();
+            $config = static::DB()->table('config')->where('config_name', '=', $name)->first();
 
             if (is_array($value)) {
                 $value = json_encode($value);
@@ -66,13 +66,13 @@ trait Config
                     'config_autoload' => $is_autoload,
                 ];
 
-                $configId = \DB::table('config')->insertGetId($in);
+                $configId = static::DB()->table('config')->insertGetId($in);
             } else {
                 $up = [
                     'config_value' => $value,
                     'config_autoload' => $is_autoload,
                 ];
-                \DB::table('config')->where('config_name', $name)->update($up);
+                static::DB()->table('config')->where('config_name', $name)->update($up);
             }
         } catch (\Throwable $e) {
             return $e->getMessage();
@@ -84,7 +84,7 @@ trait Config
     static function configGet($name)
     {
 
-        $config = \DB::table('config')->where('config_name', '=', $name)->first();
+        $config = static::DB()->table('config')->where('config_name', '=', $name)->first();
 
         if (empty($config)) {
             return NULL;
@@ -108,7 +108,7 @@ trait Config
     {
 
         try {
-            DB::table('config')->where('config_name', '=', $name)->delete();
+            static::DB()->table('config')->where('config_name', '=', $name)->delete();
         } catch (\Throwable $e) {
             return $e->getMessage();
         }

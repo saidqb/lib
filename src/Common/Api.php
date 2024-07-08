@@ -8,7 +8,6 @@
 
 namespace Saidqb\Lib\Common;
 
-use Validator;
 use Saidqb\Lib\Support\ResponseCode;
 use Saidqb\Lib\Support\Helper;
 
@@ -328,53 +327,4 @@ trait Api
         return $new;
     }
 
-    static function customValidator()
-    {
-
-
-        Validator::extend('jsonarray', function ($attribute, $value, $parameters) {
-            $json = json_decode($value, true);
-            if (is_array($json) && empty($json)) {
-                return true;
-            }
-            if (isset($json[0]) && is_array($json[0]) && !empty($json[0])) {
-                return true;
-            }
-            return false;
-        });
-        Validator::replacer('jsonarray', function ($message, $attribute, $rule, $parameters) {
-            // print_r([$message, $attribute, $rule, $parameters]); die();
-            return $attribute . ' must json array.';
-        });
-
-        Validator::extend('required_jsonarray', function ($attribute, $value, $parameters) {
-            $json = json_decode($value, true);
-            if (is_array($json) && empty($json)) {
-                return false;
-            }
-            if (isset($json[0]) && is_array($json[0]) && !empty($json[0])) {
-                return true;
-            }
-            return false;
-        });
-        Validator::replacer('required_jsonarray', function ($message, $attribute, $rule, $parameters) {
-            // print_r([$message, $attribute, $rule, $parameters]); die();
-            return $attribute . ' must json array and not empty.';
-        });
-
-        Validator::extend('required_json', function ($attribute, $value, $parameters) {
-            $json = json_decode($value, true);
-            if (is_array($json) && empty($json)) {
-                return false;
-            }
-            if (isset($json[0]) && is_array($json[0]) && !empty($json[0])) {
-                return true;
-            }
-            return false;
-        });
-        Validator::replacer('required_json', function ($message, $attribute, $rule, $parameters) {
-            // print_r([$message, $attribute, $rule, $parameters]); die();
-            return $attribute . ' must json object and not empty.';
-        });
-    }
 }
