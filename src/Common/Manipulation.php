@@ -11,7 +11,6 @@ namespace Saidqb\Lib\Common;
 
 trait Manipulation
 {
-
     static function excerpt($text, $chars = 25, $lastText = '...')
     {
         $text = strip_tags($text);

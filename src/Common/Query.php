@@ -7,6 +7,7 @@ namespace Saidqb\Lib\Common;
  * @@link http://saidqb.github.io
  *
  */
+use Saidqb\Lib\Support\Helper;
 
 
 trait Query
@@ -141,15 +142,15 @@ trait Query
             $showPage = 5;
             $pagination['count'] = $res->count();
             $pagination['currentPage'] = $res->currentPage();
-            $pagination['firstItem'] = emptyVal($res->firstItem(), 0);
+            $pagination['firstItem'] = Helper::emptyVal($res->firstItem(), 0);
             $pagination['hasPages'] = $res->hasPages();
             $pagination['hasMorePages'] = $res->hasMorePages();
-            $pagination['lastItem'] = emptyVal($res->lastItem(), 0);
+            $pagination['lastItem'] = Helper::emptyVal($res->lastItem(), 0);
             $pagination['lastPage'] = $res->lastPage();
-            $pagination['nextPageUrl'] = emptyVal($res->nextPageUrl(), '');
+            $pagination['nextPageUrl'] = Helper::emptyVal($res->nextPageUrl(), '');
             $pagination['onFirstPage'] = $res->onFirstPage();
             $pagination['perPage'] = $res->perPage();
-            $pagination['previousPageUrl'] = emptyVal($res->previousPageUrl());
+            $pagination['previousPageUrl'] = Helper::emptyVal($res->previousPageUrl());
             $pagination['total'] = $res->total();
             $pagination['getPageName'] = $res->getPageName();
             $pagination['showPage'] = $showPage;
@@ -287,7 +288,7 @@ trait Query
             $query->where(function ($query) use ($req) {
                 $conf = self::confQueryPaginate();
                 foreach ($conf['search'] as $key => $v) {
-                    $v = issetVal($conf['columns_as'], $v, $v);
+                    $v = Helper::issetVal($conf['columns_as'], $v, $v);
                     $query->orWhere($v, 'LIKE', "%{$req['search']}%");
                 }
             });
@@ -297,17 +298,17 @@ trait Query
             if (is_array($req['sort']) && !empty($req['sort'])) {
                 foreach ($req['sort'] as $k => $v) {
                     if (in_array($k, $conf['columns']) && in_array(strtolower($v), $data_default['order_by'])) {
-                        $k = issetVal($conf['columns_as'], $k, $k);
+                        $k = Helper::issetVal($conf['columns_as'], $k, $k);
                         $query->orderBy($k, $v);
                     }
                 }
             } else {
                 if (empty($req['sort'])) {
-                    $req['sort'] = issetVal($conf['columns_as'], $conf['columns'][0], $conf['columns'][0]);
+                    $req['sort'] = Helper::issetVal($conf['columns_as'], $conf['columns'][0], $conf['columns'][0]);
                 }
 
                 if (in_array($req['sort'], $conf['columns']) && in_array(strtolower($req['order_by']), $data_default['order_by'])) {
-                    $req['sort'] = issetVal($conf['columns_as'], $req['sort'], $req['sort']);
+                    $req['sort'] = Helper::issetVal($conf['columns_as'], $req['sort'], $req['sort']);
                     $query->orderBy($req['sort'], $req['order_by']);
                 }
             }
@@ -412,7 +413,7 @@ trait Query
                         }
                         break;
                     case 'date':
-                        if (endWith($field, 'date')) {
+                        if (Helper::endWith($field, 'date')) {
                             $value1 = '';
                             $value2 = '';
                             if (strstr($value, '::')) {
@@ -437,7 +438,7 @@ trait Query
                                 }
                             }
                         }
-                        if (endWith($field, 'datetime')) {
+                        if (Helper::endWith($field, 'datetime')) {
                             $value1 = '';
                             $value2 = '';
                             if (strstr($value, '::')) {
@@ -488,7 +489,7 @@ trait Query
 
         foreach ($req as $field => $value) {
             if (in_array($field, $conf['columns'])) {
-                $field = issetVal($conf['columns_as'], $field, $field);
+                $field = Helper::issetVal($conf['columns_as'], $field, $field);
                 if (is_array($value)) {
                     foreach ($value as $comparison => $val) {
                         if ($val !== '') {

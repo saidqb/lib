@@ -43,11 +43,14 @@ trait Url
         if (empty($urlString)) {
             $urlString = $_SERVER['REQUEST_URI'];
         }
+
         $uri_path = parse_url($urlString, PHP_URL_PATH);
         $uri_segments = explode('/', $uri_path);
+
         if (isset($uri_segments[$segment])) {
             return $uri_segments[$segment];
         }
+
         return '';
     }
 

@@ -9,6 +9,8 @@
 namespace Saidqb\Lib\Common;
 
 use Validator;
+use Saidqb\Lib\Support\ResponseCode;
+use Saidqb\Lib\Support\Helper;
 
 trait Api
 {
@@ -70,7 +72,7 @@ trait Api
                 if (!empty(static::$responseFilterConfig['decode'])) {
 
                     if (in_array($kv, static::$responseFilterConfig['decode'])) {
-                        if (!empty($v) && isJson($v)) {
+                        if (!empty($v) && Helper::isJson($v)) {
                             $nv[$kv] = json_decode($v);
 
                             if (!empty(static::$responseFilterConfig['decode_child'])) {
@@ -96,7 +98,7 @@ trait Api
 
                 if (!empty(static::$responseFilterConfig['decode_array'])) {
                     if (in_array($kv, static::$responseFilterConfig['decode_array'])) {
-                        if (!empty($v) && isJson($v)) {
+                        if (!empty($v) && Helper::isJson($v)) {
                             $nv[$kv] = json_decode($v);
                         } else if (is_array($v)) {
                             $nv[$kv] = $v;
@@ -164,7 +166,7 @@ trait Api
         }
 
         $is_success = 0;
-        if ($code == HTTP_OK) {
+        if ($code == ResponseCode::HTTP_OK) {
             $is_success = 1;
         }
         $content = [
@@ -196,7 +198,7 @@ trait Api
                 $content['message'] = $content['data'];
                 $content['data'] = [];
             } else {
-                $content['data'] = emptyVal($content['data'], []);
+                $content['data'] = Helper::emptyVal($content['data'], []);
             }
         } else if (($data == 'data_list') || isset($data[0]) && is_array($data) && in_array('data_list', $data)) {
             $content['data'] = [];
@@ -210,18 +212,18 @@ trait Api
                 $content['data'] = (object) null;
             } else {
                 $nd = $data;
-                if ($code == HTTP_OK) {
+                if ($code == ResponseCode::HTTP_OK) {
                     $nd = self::filterResponseField($data);
                 }
-                $content['data'] = emptyVal($nd, (object) null);
+                $content['data'] = Helper::emptyVal($nd, (object) null);
             }
         }
 
-        if (!in_array($code, [HTTP_OK, HTTP_BAD_REQUEST, HTTP_VALIDATION_ERROR, HTTP_NOT_FOUND])) {
+        if (!in_array($code, [ResponseCode::HTTP_OK, ResponseCode::HTTP_BAD_REQUEST, ResponseCode::HTTP_VALIDATION_ERROR, ResponseCode::HTTP_NOT_FOUND])) {
             unset($content['data']);
         }
 
-        if ($code == HTTP_VALIDATION_ERROR) {
+        if ($code == ResponseCode::HTTP_VALIDATION_ERROR) {
             $content_data = $content['data'];
             $content_data = (array)$content_data;
             if (!empty($content_data)) {
@@ -232,7 +234,7 @@ trait Api
             }
         }
 
-        return response($content, HTTP_OK);
+        return response($content, ResponseCode::HTTP_OK);
     }
 
 
@@ -260,7 +262,7 @@ trait Api
             if (is_string($content['data']) && !empty($content['data'])) {
                 $content['data'] = [];
             } else {
-                $content['data'] = emptyVal($content['data'], []);
+                $content['data'] = Helper::emptyVal($content['data'], []);
             }
         } else if (($data == 'data_list') || isset($data[0]) && is_array($data) && in_array('data_list', $data)) {
             $content['data'] = [];
@@ -274,7 +276,7 @@ trait Api
             } else {
                 $nd = $data;
                 $nd = self::filterResponseField($data);
-                $content['data'] = emptyVal($nd, (object) null);
+                $content['data'] = Helper::emptyVal($nd, (object) null);
             }
         }
 
@@ -286,13 +288,13 @@ trait Api
     {
         $req = request()->all();
 
-        $json = issetVal($req, $key, '{}');
+        $json = Helper::issetVal($req, $key, '{}');
 
         if (is_array($json)) {
             return json_encode($json);
         }
 
-        if (!isJson($json)) {
+        if (!Helper::isJson($json)) {
             $json = '{}';
         }
         return $json;
@@ -302,13 +304,13 @@ trait Api
     {
         $req = request()->all();
 
-        $json = issetVal($req, $key, '[]');
+        $json = Helper::issetVal($req, $key, '[]');
 
         if (is_array($json)) {
             return json_encode($json);
         }
 
-        if (!isJson($json)) {
+        if (!Helper::isJson($json)) {
             $json = '[]';
         }
         return $json;
@@ -375,6 +377,4 @@ trait Api
             return $attribute . ' must json object and not empty.';
         });
     }
-
-
 }

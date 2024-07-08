@@ -17,6 +17,7 @@ $table->index('config_id','config_id');
 $table->index('config_name','config_name');
 */
 
+use Saidqb\Lib\Support\Helper;
 
 trait Config
 {
@@ -90,7 +91,7 @@ trait Config
         }
 
         if (isset($config->config_value)) {
-            if (isJson($config->config_value)) {
+            if (Helper::isJson($config->config_value)) {
                 $config->config_value = json_decode($config->config_value);
             }
         }

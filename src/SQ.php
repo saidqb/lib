@@ -25,8 +25,4 @@ class SQ
     use Common\Server;
     use Common\Url;
 
-    static function version()
-    {
-        return '1.0.0';
-    }
 }
